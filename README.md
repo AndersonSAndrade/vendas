@@ -8,5 +8,5 @@
 - [x] Criando Banco H2 para teste, e configurando conexão com o banco
 - [x] Criando Script SQL para criação das tabelas
 - [x] Criando Repoditorio de Clientes e Trabalhando com JdbcTemplate
-- [ ] ...
+- [ ] Criando Repositorios e JPARepository e Trabalhando com JPA.
  
