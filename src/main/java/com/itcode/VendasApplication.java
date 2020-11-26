@@ -1,7 +1,9 @@
 package com.itcode;
 
 import com.itcode.domain.entity.Cliente;
+import com.itcode.domain.entity.Pedido;
 import com.itcode.domain.repositories.ClienteRepository;
+import com.itcode.domain.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
@@ -16,14 +20,23 @@ import java.util.List;
 public class VendasApplication {
 
     @Bean
-    public CommandLineRunner init(@Autowired ClienteRepository clientes){
+    public CommandLineRunner init(@Autowired ClienteRepository clientes, @Autowired PedidoRepository pedidos){
         return args -> {
-            clientes.salvar(new Cliente(1,"Anderson S. Andrade"));
-            clientes.salvar(new Cliente(2,"Débora Q. Maciel Andrade"));
-            clientes.salvar(new Cliente(3,"Miriã F. Maciel"));
-            clientes.salvar(new Cliente(4,"Helena M. Andrade"));
-            List<Cliente> listaTodos = clientes.obterTodos();
-            listaTodos.forEach(System.out::println);
+            System.out.println("Salvando Clientes");
+            Cliente ads = new Cliente("Anderson S. Andrade");
+            clientes.save(ads);
+            Pedido p = new Pedido();
+            p.setCliente(ads);
+            p.setDataPedido(LocalDate.now());
+            p.setTotal(BigDecimal.valueOf(100));
+            pedidos.save(p);
+
+//            Cliente cliente = clientes.findClienteFetchPedidos(ads.getId());
+//            System.out.println(cliente);
+//            System.out.println(cliente.getPedidos());
+
+            pedidos.findByCliente(ads).forEach(System.out::println);
+
         };
     }
 

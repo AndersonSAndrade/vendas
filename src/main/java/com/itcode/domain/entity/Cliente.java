@@ -8,17 +8,35 @@
 
 package com.itcode.domain.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(name = "nome",length = 100)
     private String nome;
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<Pedido> pedidos;
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
 
     public Cliente() {
     }
 
-    public Cliente(Integer id, String nome) {
-        this.id = id;
+    public Cliente(String nome) {
         this.nome = nome;
     }
 

@@ -8,12 +8,19 @@
 
 package com.itcode.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "produto")
 public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(length = 100)
     private String descricao;
+    @Column(name = "preco_unitario")
     private BigDecimal preco;
 
     public Produto() {

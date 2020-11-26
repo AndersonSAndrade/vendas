@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2020. Olá todos os direitos reservados para IT CODE TECHS SYSTEMS.
- * Local do Arquivo: (/Users/andersons.andrade/Desktop/JAVA/SPRING/DEVELOPER/vendas/src/main/resources/data.sql)
- * Projeto: vendas -> vendas -> data.sql
+ * Local do Arquivo: (/Users/andersons.andrade/Desktop/JAVA/SPRING/DEVELOPER/vendas/src/main/resources/meuschema.sql)
+ * Projeto: vendas -> vendas -> meuschema.sql
  * Criador: andersons.andrade
  * Última Modificação: 24/11/2020 18:57
  */

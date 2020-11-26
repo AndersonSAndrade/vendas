@@ -9,37 +9,15 @@
 package com.itcode.domain.repositories;
 
 import com.itcode.domain.entity.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-@Repository
-public class ClienteRepository {
-
-    private static String insert = " INSERT INTO CLIENTE (NOME) VALUES (?) ";
-    private static String selectAll = " SELECT * FROM CLIENTE ";
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    public Cliente salvar(Cliente cliente){
-        jdbcTemplate.update(insert, new Object[]{cliente.getNome()});
-        return cliente;
-    }
-
-    public List<Cliente> obterTodos(){
-        return jdbcTemplate.query(selectAll, new RowMapper<Cliente>() {
-            @Override
-            public Cliente mapRow(ResultSet resultSet, int i) throws SQLException {
-                Integer id = resultSet.getInt("id");
-                String nome = resultSet.getString("nome");
-                return new Cliente(id, nome);
-            }
-        });
-    }
+public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
+    @Query(value = " select c from Cliente c where c.nome like :nome ")
+    List<Cliente> encontrarPorNome(@Param("nome") String nome);
+    @Query(" select c from Cliente c left join fetch c.pedidos where c.id=:id")
+    Cliente findClienteFetchPedidos(@Param("id") Integer id);
 }
