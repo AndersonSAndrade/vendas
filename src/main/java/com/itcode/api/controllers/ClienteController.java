@@ -10,60 +10,55 @@ package com.itcode.api.controllers;
 
 import com.itcode.domain.entity.Cliente;
 import com.itcode.domain.repositories.ClienteRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatus.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
+import static org.springframework.http.HttpStatus.*;
 
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
-
     private ClienteRepository repo;
-
-    public ClienteController(ClienteRepository repo) {
-        this.repo = repo;
-    }
 
     @GetMapping("/{id}")
     public Cliente getClienteById(@PathVariable Integer id){
         return repo.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+                new ResponseStatusException(NOT_FOUND, "Cliente não encontrado"));
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente){
         Cliente req = repo.save(cliente);
         return ResponseEntity.ok(req);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void delete(@PathVariable Integer id){
         repo.findById(id).map(c -> {
             repo.delete(c);
             return c;
         }).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+                new ResponseStatusException(NOT_FOUND, "Cliente não encontrado"));
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Cliente cliente){
         repo.findById(id).map(c -> {
             cliente.setId(c.getId());
             repo.save(cliente);
             return c;
         }).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+                new ResponseStatusException(NOT_FOUND, "Cliente não encontrado"));
     }
 
     @GetMapping()

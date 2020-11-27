@@ -9,6 +9,7 @@
 - [x] Criando Script SQL para criação das tabelas
 - [x] Criando Repoditorio de Clientes e Trabalhando com JdbcTemplate
 - [x] Criando Repositorios e JPARepository e Trabalhando com JPA.
-- [ ] Começando a criar os Controladores Cliente, Produto, Pedido e Item Pedido - CRUD.
-- [ ] ...
+- [x] Começando a criar os Controladores Cliente, Produto, Pedido e Item Pedido - CRUD.
+- [x] Criando Exception Personalizada, Implementando Serviço para realizaçnao de pedidos, 
+- [x] Incluindo Lombok nas classes, Incluindo DTOs para pedidos.
  
