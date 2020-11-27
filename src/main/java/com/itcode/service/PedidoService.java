@@ -9,8 +9,13 @@
 package com.itcode.service;
 
 import com.itcode.api.dto.PedidoDTO;
+import com.itcode.domain.StatusPedido;
 import com.itcode.domain.entity.Pedido;
+
+import java.util.Optional;
 
 public interface PedidoService {
     Pedido save(PedidoDTO dto);
+    Optional<Pedido> viewPedidoAll(Integer id);
+    void updateStatusPedido(Integer id, StatusPedido statusPedido);
 }

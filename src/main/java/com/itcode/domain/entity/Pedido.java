@@ -8,6 +8,7 @@
 
 package com.itcode.domain.entity;
 
+import com.itcode.domain.StatusPedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public class Pedido {
     private LocalDate dataPedido;
     @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> items;
 }

@@ -12,4 +12,6 @@
 - [x] Começando a criar os Controladores Cliente, Produto, Pedido e Item Pedido - CRUD.
 - [x] Criando Exception Personalizada, Implementando Serviço para realizaçnao de pedidos, 
 - [x] Incluindo Lombok nas classes, Incluindo DTOs para pedidos.
- 
+- [x] Trabalhando com Exceptions, realizando atualização de status de pedido.
+- [ ] Validação de dados, Starter Validation, Bean Validation, Validando Entidades, Criação de annotation de validação customizada e intercionalização.
+

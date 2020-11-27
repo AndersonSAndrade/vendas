@@ -10,6 +10,7 @@ package com.itcode.service.impl;
 
 import com.itcode.api.dto.ItemPedidoDTO;
 import com.itcode.api.dto.PedidoDTO;
+import com.itcode.domain.StatusPedido;
 import com.itcode.domain.entity.Cliente;
 import com.itcode.domain.entity.ItemPedido;
 import com.itcode.domain.entity.Pedido;
@@ -19,6 +20,7 @@ import com.itcode.domain.repositories.ItemPedidoRepository;
 import com.itcode.domain.repositories.PedidoRepository;
 import com.itcode.domain.repositories.ProdutoRepository;
 import com.itcode.exception.BusinessExceptionRule;
+import com.itcode.exception.PedidoNotFoudException;
 import com.itcode.service.PedidoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,11 +49,26 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setTotal(dto.getTotal());
         pedido.setDataPedido(LocalDate.now());
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
         List<ItemPedido> itemsPedido = convertItems(pedido, dto.getItems());
         pedidoRepository.save(pedido);
         itemPedidoRepository.saveAll(itemsPedido);
         pedido.setItems(itemsPedido);
         return pedido;
+    }
+
+    @Override
+    public Optional<Pedido> viewPedidoAll(Integer id) {
+        return pedidoRepository.findByIdFetchItems(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatusPedido(Integer id, StatusPedido statusPedido) {
+        pedidoRepository.findById(id).map(pedido -> {
+            pedido.setStatus(statusPedido);
+            return pedidoRepository.save(pedido);
+        }).orElseThrow(() -> new PedidoNotFoudException());
     }
 
     private List<ItemPedido> convertItems(Pedido pedido, List<ItemPedidoDTO> items){
